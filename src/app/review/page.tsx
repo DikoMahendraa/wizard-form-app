@@ -35,7 +35,7 @@ export default function ReviewPage() {
 
   // Group services by category for display
   const groupedServices = Object.entries(serviceCategories).reduce(
-    (acc, [categoryKey, category]) => {
+    (acc, [, category]) => {
       const categoryServices =
         formData.services?.filter((service) =>
           category.options.includes(service)
@@ -63,8 +63,8 @@ export default function ReviewPage() {
               Application Submitted!
             </h2>
             <p className="text-gray-600 mb-6">
-              Thank you for completing the form. We've received your information
-              and will be in touch soon.
+              Thank you for completing the form. {`We've`} received your
+              information and will be in touch soon.
             </p>
             <button
               onClick={() => {
@@ -93,8 +93,8 @@ export default function ReviewPage() {
             Review Your Information
           </h2>
           <p className="text-gray-600">
-            Please review all the information you've provided before submitting.
-            You can go back to any step to make changes.
+            Please review all the information {`you've`} provided before
+            submitting. You can go back to any step to make changes.
           </p>
         </div>
 

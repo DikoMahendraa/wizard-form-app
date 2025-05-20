@@ -1,31 +1,24 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+// app/step/[step]/page.tsx (server component)
 import Step1Form from "@/components/screen/step-1";
 import Step2Form from "@/components/screen/step-2";
 import Step3Form from "@/components/screen/step-3";
 import Step4Form from "@/components/screen/step-4";
 import Step5Form from "@/components/screen/step-5";
+import { redirect } from "next/navigation";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     step: string;
-  };
+  }>;
 };
 
-export default function StepPage({ params }: PageProps) {
-  const router = useRouter();
-  const stepNumber = parseInt(params.step);
+export default async function StepPage({ params }: PageProps) {
+  const stepNumber = parseInt((await params).step);
 
-  // Redirect if step number is invalid
-  useEffect(() => {
-    if (isNaN(stepNumber) || stepNumber < 1 || stepNumber > 5) {
-      router.push("/step/1");
-    }
-  }, [stepNumber, router]);
+  if (isNaN(stepNumber) || stepNumber < 1 || stepNumber > 5) {
+    redirect("/step/1");
+  }
 
-  // Render appropriate step component
   const renderStepComponent = () => {
     switch (stepNumber) {
       case 1:

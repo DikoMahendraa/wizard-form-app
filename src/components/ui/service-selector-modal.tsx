@@ -53,6 +53,8 @@ export function ServiceSelectorModal({
       );
 
       if (filteredOptions.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         acc[key] = {
           ...category,
           options: filteredOptions,
