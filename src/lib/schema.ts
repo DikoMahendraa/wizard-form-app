@@ -7,7 +7,7 @@ export const basicInfoSchema = z.object({
     .min(3, { message: "Name must be at least 3 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
   role: z.enum(["Developer", "Designer", "PM"], {
-    required_error: "Please select a role",
+    message: "Please select a role",
   }),
   subscribe: z.boolean().optional(),
 });
@@ -15,7 +15,7 @@ export const basicInfoSchema = z.object({
 // Schedule Meeting Schema (Step 2)
 export const scheduleMeetingSchema = z.object({
   preferredDate: z.date({
-    required_error: "Please select a date",
+    message: "Please select a date",
   }),
   preferredTime: z.string().min(1, { message: "Please select a time" }),
   timezone: z.string().min(1, { message: "Please select a timezone" }),
@@ -39,7 +39,7 @@ export const skillsSchema = z.object({
 // Preferences Schema (Step 5)
 export const preferencesSchema = z.object({
   workPreference: z.enum(["Remote", "Hybrid", "On-site"], {
-    required_error: "Please select a work preference",
+    message: "Please select a work preference",
   }),
   homeOfficeReady: z.boolean().optional(),
   relocationWillingness: z.boolean().optional(),

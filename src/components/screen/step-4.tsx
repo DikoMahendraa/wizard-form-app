@@ -17,6 +17,7 @@ export default function Step4Form() {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<SkillsFormData>({
     resolver: zodResolver(skillsSchema),
@@ -59,7 +60,7 @@ export default function Step4Form() {
             </label>
             <MultiSelect
               options={availableSkills}
-              selected={formData.skills || []}
+              selected={watch("skills") || []}
               onChange={handleSkillsChange}
               placeholder="Select skills"
               error={errors.skills?.message}

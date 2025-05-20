@@ -58,57 +58,55 @@ export function FormWizardLayout({
         <div className="w-full max-w-3xl">
           {/* Progress Bar */}
           <div className="mb-10">
-            <ol className="flex items-center w-full">
+            <ol className="flex w-full justify-between items-center relative">
               {steps.map((step, index) => {
                 const isCompleted = index < currentStep;
                 const isCurrent = index === currentStep;
 
                 return (
-                  <li key={step.path} className="flex items-center">
-                    <div className="flex flex-col items-center flex-1">
-                      <div
-                        className={cn(
-                          "flex items-center justify-center w-8 h-8 rounded-full",
-                          isCompleted
-                            ? "bg-blue-600"
-                            : isCurrent
-                            ? "bg-blue-600"
-                            : "bg-gray-200"
-                        )}
-                      >
-                        {isCompleted ? (
-                          <CircleCheckBig className="w-5 h-5 text-white" />
-                        ) : (
-                          <span
-                            className={cn(
-                              "text-sm font-medium",
-                              isCurrent ? "text-white" : "text-gray-500"
-                            )}
-                          >
-                            {index + 1}
-                          </span>
-                        )}
-                      </div>
+                  <li
+                    key={step.path}
+                    className="flex-1 flex flex-col items-center relative"
+                  >
+                    {/* Circle */}
+                    <div
+                      className={cn(
+                        "z-20 flex items-center relative justify-center w-8 h-8 rounded-full border-2 transition-all duration-300",
+                        isCompleted
+                          ? "bg-blue-600 border-blue-600 text-white"
+                          : isCurrent
+                          ? "bg-blue-600 border-blue-600 text-white"
+                          : "bg-white border-gray-300 text-gray-500"
+                      )}
+                    >
+                      {isCompleted ? (
+                        <CircleCheckBig className="w-5 h-5" />
+                      ) : (
+                        <span className="text-sm font-medium">{index + 1}</span>
+                      )}
+                      {/* Label */}
                       <span
                         className={cn(
-                          "mt-2 text-xs",
+                          "text-xs absolute top-9 min-w-[5rem] text-center",
                           isCurrent
-                            ? "text-blue-600 font-medium"
-                            : isCompleted
-                            ? "text-gray-900"
-                            : "text-gray-500"
+                            ? "text-blue-600 font-medium block"
+                            : "text-gray-500 sm:block hidden"
                         )}
                       >
                         {step.label}
                       </span>
                     </div>
+
+                    {/* Divider Line */}
                     {index < steps.length - 1 && (
-                      <div
-                        className={cn(
-                          "flex-1 h-0.5",
-                          index < currentStep ? "bg-blue-600" : "bg-gray-200"
-                        )}
-                      />
+                      <div className="absolute top-4 left-1/2 w-full h-0.5 z-10">
+                        <div
+                          className={cn(
+                            "w-full h-full",
+                            index < currentStep ? "bg-blue-600" : "bg-gray-200"
+                          )}
+                        />
+                      </div>
                     )}
                   </li>
                 );
