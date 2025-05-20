@@ -24,10 +24,10 @@ export const metadata: Metadata = {
     title: "Multi-Step Form Wizard",
     description:
       "Build scalable, type-safe forms with Next.js and Zustand. Supports Zod validation, persistent state, conditional fields, and a modern UI with shadcn/ui.",
-    url: "https://yourdomain.com",
+    url: "https://wizard-form-app.vercel.app",
     images: [
       {
-        url: "https://dummyimage.com/600x400/000/fff",
+        url: "https://i.pinimg.com/736x/6f/0c/7d/6f0c7dd236a49fef3d2c7ad9def7f87c.jpg",
         width: 1200,
         height: 630,
         alt: "Multi-Step Form Wizard",
@@ -39,7 +39,9 @@ export const metadata: Metadata = {
     title: "Multi-Step Form Wizard",
     description:
       "A powerful multi-step form solution built with Next.js App Router, Zod, Zustand, and shadcn/ui.",
-    images: ["https://dummyimage.com/600x400/000/fff"],
+    images: [
+      "https://i.pinimg.com/736x/6f/0c/7d/6f0c7dd236a49fef3d2c7ad9def7f87c.jpg",
+    ],
   },
 };
 
