@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { X, Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "./button";
 
 interface MultiSelectProps {
   options: string[];
@@ -70,7 +71,7 @@ export function MultiSelect({
     <div className="relative w-full" ref={containerRef}>
       <div
         className={cn(
-          "flex min-h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 cursor-pointer",
+          "flex min-h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 cursor-pointer",
           error && "border-red-500",
           isOpen && "ring-2 ring-ring ring-offset-2"
         )}
@@ -81,11 +82,11 @@ export function MultiSelect({
             selected.map((item) => (
               <span
                 key={item}
-                className="inline-flex items-center gap-1 rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800"
+                className="inline-flex items-center gap-1 rounded-md bg-primary/30 px-2 py-1 text-xs font-medium text-black"
               >
                 {item}
                 <X
-                  className="h-3.5 w-3.5 cursor-pointer text-blue-600 hover:text-blue-800"
+                  className="h-3.5 w-3.5 cursor-pointer text-black"
                   onClick={(e) => removeOption(item, e)}
                 />
               </span>
@@ -108,13 +109,14 @@ export function MultiSelect({
         </div>
         <div className="flex items-center gap-1">
           {selected.length > 0 && (
-            <button
+            <Button
+              variant="ghost"
               type="button"
               className="text-gray-500 hover:text-gray-700"
               onClick={clearAll}
             >
               Clear all
-            </button>
+            </Button>
           )}
           <ChevronDown className="h-4 w-4" />
         </div>
@@ -134,14 +136,14 @@ export function MultiSelect({
                   className={cn(
                     "flex items-center justify-between px-3 py-2 rounded-md cursor-pointer",
                     selected.includes(option)
-                      ? "bg-blue-50 text-blue-900"
+                      ? "bg-blue-50 text-primary"
                       : "hover:bg-gray-100"
                   )}
                   onClick={() => toggleOption(option)}
                 >
                   <span>{option}</span>
                   {selected.includes(option) && (
-                    <Check className="h-4 w-4 text-blue-600" />
+                    <Check className="h-4 w-4 text-primary" />
                   )}
                 </div>
               ))

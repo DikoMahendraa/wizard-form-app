@@ -18,6 +18,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "../ui/button";
+import { useEffect } from "react";
 
 export default function Step2Form() {
   const router = useRouter();
@@ -25,6 +27,7 @@ export default function Step2Form() {
 
   // Initialize form with existing data
   const {
+    reset,
     control,
     handleSubmit,
     formState: { errors },
@@ -65,6 +68,19 @@ export default function Step2Form() {
     "04:30 PM",
     "05:00 PM",
   ];
+
+  // ✅ Reset form values when formData is loaded
+  useEffect(() => {
+    if (formData) {
+      reset({
+        preferredDate: formData.preferredDate
+          ? new Date(formData.preferredDate)
+          : undefined,
+        preferredTime: formData.preferredTime || "",
+        timezone: formData.timezone || "",
+      });
+    }
+  }, [formData, reset]);
 
   return (
     <FormWizardLayout showNextButton={false}>
@@ -220,12 +236,9 @@ export default function Step2Form() {
           </div>
 
           <div className="pt-2">
-            <button
-              type="submit"
-              className="w-full inline-flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
+            <Button type="submit" size="lg" className="w-full cursor-pointer">
               Continue to Next Step
-            </button>
+            </Button>
           </div>
         </form>
       </div>

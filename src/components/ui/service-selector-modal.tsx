@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Filter, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { serviceCategories } from "@/lib/schema";
+import { Button } from "./button";
 
 interface ServiceSelectorModalProps {
   isOpen: boolean;
@@ -190,18 +191,12 @@ export function ServiceSelectorModal({
 
         {/* Footer */}
         <div className="p-4 border-t border-gray-200 flex justify-end gap-3">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
-          >
+          <Button onClick={onClose} variant="outline" size="lg">
             Cancel
-          </button>
-          <button
-            onClick={handleSave}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
+          </Button>
+          <Button onClick={handleSave} size="lg">
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </div>

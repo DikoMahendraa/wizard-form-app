@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { FormWizardLayout } from "@/components/ui/form-wizard-layout";
 import { useFormStore } from "@/stores/useFormStore";
 import { preferencesSchema, PreferencesFormData } from "@/lib/schema";
+import { Button } from "../ui/button";
 
 export default function Step5Form() {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function Step5Form() {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<PreferencesFormData>({
     resolver: zodResolver(preferencesSchema),
@@ -51,6 +53,18 @@ export default function Step5Form() {
     completeStep(5);
     router.push("/review");
   };
+
+  // ✅ Reset form values when formData is loaded
+  useEffect(() => {
+    if (formData) {
+      reset({
+        workPreference: formData.workPreference,
+        homeOfficeReady: formData.homeOfficeReady || false,
+        relocationWillingness: formData.relocationWillingness || false,
+        termsAccepted: formData.termsAccepted || false,
+      });
+    }
+  }, [formData, reset]);
 
   return (
     <FormWizardLayout showNextButton={false}>
@@ -118,6 +132,7 @@ export default function Step5Form() {
                 </label>
               </div>
             </div>
+
             {errors.workPreference && (
               <p className="mt-1 text-sm text-red-600">
                 {errors.workPreference.message}
@@ -134,10 +149,10 @@ export default function Step5Form() {
                     id="homeOfficeReady"
                     type="checkbox"
                     {...register("homeOfficeReady")}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="h-4 w-4 cursor-pointer text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                   />
                 </div>
-                <div className="ml-3 text-sm">
+                <div className="ml-3 cursor-pointer text-sm">
                   <label
                     htmlFor="homeOfficeReady"
                     className="font-medium text-gray-700"
@@ -161,13 +176,13 @@ export default function Step5Form() {
                     id="relocationWillingness"
                     type="checkbox"
                     {...register("relocationWillingness")}
-                    className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
+                    className="h-4 cursor-pointer w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
                   />
                 </div>
                 <div className="ml-3 text-sm">
                   <label
                     htmlFor="relocationWillingness"
-                    className="font-medium text-gray-700"
+                    className="font-medium cursor-pointer text-gray-700"
                   >
                     Willing to Relocate
                   </label>
@@ -187,13 +202,13 @@ export default function Step5Form() {
                   id="termsAccepted"
                   type="checkbox"
                   {...register("termsAccepted")}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 cursor-pointer text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
               </div>
               <div className="ml-3 text-sm">
                 <label
                   htmlFor="termsAccepted"
-                  className="font-medium text-gray-700"
+                  className="font-medium cursor-pointer text-gray-700"
                 >
                   Terms and Conditions
                 </label>
@@ -211,12 +226,9 @@ export default function Step5Form() {
           </div>
 
           <div className="pt-2">
-            <button
-              type="submit"
-              className="w-full inline-flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
+            <Button type="submit" size="lg" className="w-full">
               Continue to Review
-            </button>
+            </Button>
           </div>
         </form>
       </div>

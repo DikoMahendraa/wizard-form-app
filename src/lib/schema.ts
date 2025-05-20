@@ -14,9 +14,13 @@ export const basicInfoSchema = z.object({
 
 // Schedule Meeting Schema (Step 2)
 export const scheduleMeetingSchema = z.object({
-  preferredDate: z.date({
-    message: "Please select a date",
-  }),
+  preferredDate: z
+    // Accepts either a string (e.g., from form input or localStorage) or a Date object
+    .date()
+    // Refines the value to ensure it's a valid Date object (not "Invalid Date")
+    .refine((val) => val instanceof Date && !isNaN(val.getTime()), {
+      message: "Please select a valid date", // Error shown if the value is invalid
+    }),
   preferredTime: z.string().min(1, { message: "Please select a time" }),
   timezone: z.string().min(1, { message: "Please select a timezone" }),
 });

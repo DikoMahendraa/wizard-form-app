@@ -7,6 +7,8 @@ import { FormWizardLayout } from "@/components/ui/form-wizard-layout";
 import { useFormStore } from "@/stores/useFormStore";
 import { skillsSchema, SkillsFormData, availableSkills } from "@/lib/schema";
 import { MultiSelect } from "@/components/ui/multi-select";
+import { Button } from "../ui/button";
+import { useEffect } from "react";
 
 export default function Step4Form() {
   const router = useRouter();
@@ -18,6 +20,7 @@ export default function Step4Form() {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<SkillsFormData>({
     resolver: zodResolver(skillsSchema),
@@ -39,6 +42,16 @@ export default function Step4Form() {
     completeStep(4);
     router.push("/step/5");
   };
+
+  // ✅ Reset form values when formData is loaded
+  useEffect(() => {
+    if (formData) {
+      reset({
+        skills: formData.skills || [],
+        interestedTopics: formData.interestedTopics || "",
+      });
+    }
+  }, [formData, reset]);
 
   return (
     <FormWizardLayout showNextButton={false}>
@@ -90,13 +103,10 @@ export default function Step4Form() {
             </p>
           </div>
 
-          <div className="pt-2">
-            <button
-              type="submit"
-              className="w-full inline-flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
+          <div className="pt-2 w-full">
+            <Button type="submit" size="lg" className="w-full">
               Continue to Next Step
-            </button>
+            </Button>
           </div>
         </form>
       </div>

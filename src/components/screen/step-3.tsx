@@ -3,12 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormWizardLayout } from "@/components/ui/form-wizard-layout";
 import { useFormStore } from "@/stores/useFormStore";
 import { serviceSchema, ServiceFormData } from "@/lib/schema";
 import { ServiceSelectorModal } from "@/components/ui/service-selector-modal";
 import { Plus, X } from "lucide-react";
+import { Button } from "../ui/button";
 
 export default function Step3Form() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function Step3Form() {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<ServiceFormData>({
     resolver: zodResolver(serviceSchema),
@@ -55,6 +57,15 @@ export default function Step3Form() {
     router.push("/step/4");
   };
 
+  // ✅ Reset form values when formData is loaded
+  useEffect(() => {
+    if (formData) {
+      reset({
+        services: formData.services || [],
+      });
+    }
+  }, [formData, reset]);
+
   return (
     <FormWizardLayout showNextButton={false}>
       <div className="space-y-8">
@@ -80,16 +91,18 @@ export default function Step3Form() {
               </span>
             </div>
 
-            <button
+            <Button
+              variant="outline"
+              size="lg"
               type="button"
+              className="w-full"
               onClick={openServiceSelector}
-              className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               <Plus className="h-4 w-4 mr-2" />
               {selectedServices.length > 0
                 ? "Change Selected Services"
                 : "Select Services"}
-            </button>
+            </Button>
 
             {errors.services && (
               <p className="mt-1 text-sm text-red-600">
@@ -118,11 +131,11 @@ export default function Step3Form() {
                   {selectedServices.map((service) => (
                     <span
                       key={service}
-                      className="inline-flex items-center gap-1 rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700"
+                      className="inline-flex items-center gap-1 rounded-md bg-primary/30 px-2 py-1 text-xs font-medium text-black"
                     >
                       {service}
                       <X
-                        className="h-3.5 w-3.5 cursor-pointer text-blue-600 hover:text-blue-800"
+                        className="h-3.5 w-3.5 cursor-pointer text-black"
                         onClick={() => removeService(service)}
                       />
                     </span>
@@ -133,12 +146,9 @@ export default function Step3Form() {
           </div>
 
           <div className="pt-2">
-            <button
-              type="submit"
-              className="w-full inline-flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
+            <Button type="submit" size="lg" className="w-full cursor-pointer">
               Continue to Next Step
-            </button>
+            </Button>
           </div>
         </form>
       </div>

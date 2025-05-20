@@ -7,6 +7,7 @@ import { useFormStore } from "@/stores/useFormStore";
 import { serviceCategories } from "@/lib/schema";
 import { format } from "date-fns";
 import { Check, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -56,8 +57,8 @@ export default function ReviewPage() {
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
         <div className="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="p-8 text-center">
-            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
-              <Check className="h-6 w-6 text-green-600" />
+            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-200 mb-4">
+              <Check className="h-6 w-6 text-green-500" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               Application Submitted!
@@ -66,15 +67,17 @@ export default function ReviewPage() {
               Thank you for completing the form. {`We've`} received your
               information and will be in touch soon.
             </p>
-            <button
+            <Button
               onClick={() => {
                 resetForm();
                 router.push("/");
               }}
-              className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-transparent rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="border border-primary bg-primary/40 hover:bg-primary/80 text-primary"
+              size="lg"
+              variant="outline"
             >
               Start Over
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -147,7 +150,7 @@ export default function ReviewPage() {
               <p className="text-sm text-gray-500">Preferred Date</p>
               <p className="font-medium">
                 {formData.preferredDate
-                  ? format(formData.preferredDate, "PPP")
+                  ? format(formData.preferredDate, "dd-mm-yyyy")
                   : "Not set"}
               </p>
             </div>
@@ -187,7 +190,7 @@ export default function ReviewPage() {
                     {services.map((service) => (
                       <span
                         key={service}
-                        className="inline-block px-2 py-1 rounded-md bg-blue-50 text-blue-700 text-sm"
+                        className="inline-block px-2 py-1 rounded-md bg-primary/30 text-black text-sm"
                       >
                         {service}
                       </span>
@@ -221,7 +224,7 @@ export default function ReviewPage() {
                   {formData.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="inline-block px-2 py-1 rounded-md bg-purple-50 text-purple-700 text-sm"
+                      className="inline-block px-2 py-1 rounded-md bg-primary/30 text-black text-sm"
                     >
                       {skill}
                     </span>
@@ -289,7 +292,7 @@ export default function ReviewPage() {
         {/* Submit Button (handled by layout) */}
         {isSubmitting && (
           <div className="flex items-center justify-center py-2">
-            <Loader2 className="h-5 w-5 animate-spin text-blue-600 mr-2" />
+            <Loader2 className="h-5 w-5 animate-spin text-primary mr-2" />
             <span className="text-gray-700">
               Submitting your application...
             </span>

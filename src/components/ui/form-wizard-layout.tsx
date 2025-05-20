@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { CircleCheckBig, ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Button } from "./button";
 
 const steps = [
   { path: "/step/1", label: "Basic Info" },
@@ -29,6 +31,7 @@ export function FormWizardLayout({
   onNext?: () => void;
 }) {
   const pathname = usePathname();
+
   const currentStepIndex = steps.findIndex((step) => step.path === pathname);
 
   // If we can't find the current step, default to the first step
@@ -73,9 +76,9 @@ export function FormWizardLayout({
                       className={cn(
                         "z-20 flex items-center relative justify-center w-8 h-8 rounded-full border-2 transition-all duration-300",
                         isCompleted
-                          ? "bg-blue-600 border-blue-600 text-white"
+                          ? "bg-primary border-primary text-white"
                           : isCurrent
-                          ? "bg-blue-600 border-blue-600 text-white"
+                          ? "bg-primary border-primary text-white"
                           : "bg-white border-gray-300 text-gray-500"
                       )}
                     >
@@ -89,7 +92,7 @@ export function FormWizardLayout({
                         className={cn(
                           "text-xs absolute top-9 min-w-[5rem] text-center",
                           isCurrent
-                            ? "text-blue-600 font-medium block"
+                            ? "text-primary font-medium block"
                             : "text-gray-500 sm:block hidden"
                         )}
                       >
@@ -103,7 +106,7 @@ export function FormWizardLayout({
                         <div
                           className={cn(
                             "w-full h-full",
-                            index < currentStep ? "bg-blue-600" : "bg-gray-200"
+                            index < currentStep ? "bg-primary" : "bg-gray-200"
                           )}
                         />
                       </div>
@@ -116,7 +119,18 @@ export function FormWizardLayout({
 
           {/* Main Content */}
           <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-            <div className="p-6 sm:p-8">{children}</div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={pathname} // ensures new animation when step changes
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="p-6 sm:p-8"
+              >
+                {children}
+              </motion.div>
+            </AnimatePresence>
 
             {/* Navigation Buttons */}
             <div className="px-6 sm:px-8 py-4 bg-gray-50 border-t border-gray-200 flex justify-between">
@@ -133,27 +147,26 @@ export function FormWizardLayout({
 
               {showNextButton &&
                 (nextPath ? (
-                  <button
+                  <Button
                     onClick={onNext}
                     disabled={nextDisabled}
                     className={cn(
-                      "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors",
                       nextDisabled && "opacity-50 cursor-not-allowed"
                     )}
                   >
                     Next <ChevronRight className="w-4 h-4 ml-1" />
-                  </button>
+                  </Button>
                 ) : (
-                  <button
+                  <Button
                     onClick={onNext}
                     disabled={nextDisabled}
                     className={cn(
-                      "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors",
+                      "bg-primary",
                       nextDisabled && "opacity-50 cursor-not-allowed"
                     )}
                   >
                     Submit
-                  </button>
+                  </Button>
                 ))}
             </div>
           </div>
