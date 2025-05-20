@@ -1,36 +1,158 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Multi-Step Form Wizard
 
-## Getting Started
+A modern, type-safe multi-step form wizard built with Next.js 13+ (App Router) and TypeScript.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Multi-step form with route-based navigation (`/step/1`, `/step/2`, etc.)
+- Form state persistence between steps using Zustand
+- Type-safe form validation with Zod
+- Responsive, accessible UI with shadcn/ui components
+- Modern date/time selection with react-day-picker
+- Service selection with searchable modal
+- Skills multi-select with tag input
+- Comprehensive form review page
+- Form data persistence in browser storage
+
+## 🛠 Tech Stack
+
+- **Framework:** Next.js 13+ (App Router)
+- **Language:** TypeScript
+- **Form Management:** React Hook Form
+- **Validation:** Zod
+- **State Management:** Zustand
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui
+- **Icons:** Lucide React
+- **Date Picker:** react-day-picker
+- **Date Utilities:** date-fns
+
+## 📁 Project Structure
+
+```
+├── app/                   # Next.js App Router pages
+│   ├── step/[step]/      # Dynamic step routes
+│   ├── review/           # Review page
+│   └── page.tsx          # Landing page
+├── components/
+│   ├── steps/            # Step-specific form components
+│   └── ui/               # Reusable UI components
+├── lib/
+│   ├── schema.ts         # Zod validation schemas
+│   └── utils.ts          # Utility functions
+└── stores/
+    └── formStore.ts      # Zustand form state management
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔄 Form Steps
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Basic Information**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   - Full name
+   - Email address
+   - Role selection
+   - Newsletter subscription
 
-## Learn More
+2. **Meeting Schedule**
 
-To learn more about Next.js, take a look at the following resources:
+   - Preferred date
+   - Preferred time
+   - Timezone selection
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Services Selection**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   - Multi-select modal
+   - Grouped service categories
+   - Search and filter
+   - Selected services management
 
-## Deploy on Vercel
+4. **Skills & Interests**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   - Skills multi-select
+   - Interested topics (free text)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **Preferences**
+
+   - Work preference (Remote/Hybrid/On-site)
+   - Conditional fields based on preference
+   - Terms acceptance
+
+6. **Review**
+   - Complete form summary
+   - Edit capabilities
+   - Final submission
+
+## 🔒 Form State Management
+
+- Zustand store with persistence middleware
+- Browser storage for form data
+- Step completion tracking
+- Type-safe state updates
+
+## 🎨 UI/UX Features
+
+- Responsive design
+- Form validation feedback
+- Step progress indication
+- Conditional form fields
+- Modal service selection
+- Tag-based skill selection
+- Date/time pickers
+- Loading states
+- Error handling
+
+## 📦 Key Dependencies
+
+- `next`: ^13.5.1
+- `react`: ^18.2.0
+- `react-hook-form`: ^7.53.0
+- `zod`: ^3.23.8
+- `zustand`: ^4.5.2
+- `date-fns`: ^3.6.0
+- `tailwindcss`: ^3.3.3
+- `shadcn/ui` components
+- `lucide-react`: ^0.446.0
+
+## 🚀 Getting Started
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 💾 Data Persistence
+
+Form data is automatically persisted in the browser's local storage using Zustand's persist middleware. This allows users to:
+
+- Navigate between steps without losing data
+- Close the browser and return later
+- Edit previous steps
+- Review all entered information before final submission
+
+## 🎯 Form Validation
+
+Each step implements comprehensive validation using Zod schemas:
+
+- Required field validation
+- Email format validation
+- Minimum character requirements
+- Custom validation rules
+- Conditional validation based on selected options
+
+## 🔄 State Updates
+
+The form state is managed centrally using Zustand:
+
+- Type-safe state updates
+- Step completion tracking
+- Form data persistence
+- Reset functionality
